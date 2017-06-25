@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import service.ExpressService;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -35,40 +37,38 @@ public class Express {
         for (ExpressInfo expressInfo : expressInfos) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", expressInfo.getId());
-            jsonObject.put("realName", expressInfo.getReal_name());
-            jsonObject.put("expressName", expressInfo.getExpress_name());
+            jsonObject.put("name", expressInfo.getName());
+            jsonObject.put("express", expressInfo.getExpress());
             jsonObject.put("address", expressInfo.getAddress());
             jsonObject.put("remark", expressInfo.getRemark());
-            jsonObject.put("phoneTail", expressInfo.getPhone_tail());
-            jsonObject.put("pickupCode", expressInfo.getPickup_code());
+            jsonObject.put("phone", expressInfo.getPhone());
+            jsonObject.put("message", expressInfo.getMessage());
             jsonObject.put("station", expressInfo.getStation());
             jsonArray.put(jsonObject);
         }
         response.getWriter().println(jsonArray);
     }
 
-    @RequestMapping(value = "/addExpress")
-    public void addExpress(@RequestParam("realName") String realName,
-                           @RequestParam("expressName") String expressName,
-                           @RequestParam("station") String station,
-                           @RequestParam("address") String address,
-                           @RequestParam("pickupCode") String pickupCode,
-                           @RequestParam("remark") String remark,
-                           @RequestParam("phoneTail") String phoneTail,
-                           @RequestParam("userId") String userId, PrintWriter printWriter
-    ) {
+    @RequestMapping(value = "/addExpress", method = RequestMethod.POST)
+    public void addExpress(HttpServletRequest request, HttpServletResponse httpServletResponse
+    ) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("utf-8");
+        String name = request.getParameter("name");
+        String express = request.getParameter("express");
+        String message = request.getParameter("message");
+        String remark = request.getParameter("remark");
+        String address = request.getParameter("address");
+        String station = request.getParameter("station");
+        String phone = request.getParameter("phone");
         ExpressInfo expressInfo = new ExpressInfo();
-        expressInfo.setReal_name(realName);
-        expressInfo.setExpress_name(expressName);
-        expressInfo.setStation(Long.valueOf(station));
-        expressInfo.setAddress(address);
+        expressInfo.setName(name);
+        expressInfo.setExpress(express);
+        expressInfo.setMessage(message);
         expressInfo.setRemark(remark);
-        expressInfo.setPickup_code(Long.valueOf(pickupCode));
-        expressInfo.setPhone_tail(Long.valueOf(phoneTail));
-        expressInfo.setUser_id(Long.valueOf(userId));
+        expressInfo.setAddress(address);
+        expressInfo.setStation(Long.valueOf(station));
+        expressInfo.setPhone(phone);
         expressService.addExpress(expressInfo);
-
-        printWriter.println(new JSONObject("true"));
     }
 
 }

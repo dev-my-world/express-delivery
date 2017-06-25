@@ -5,6 +5,17 @@ CREATE TABLE user_info (
   `user_psw`   VARCHAR(20)        NOT NULL
 );
 
-
-INSERT INTO user_info (user_phone, user_psw)
-VALUES ('admin', 'admin'), ('123', '123'), ('test', 'test');
+create table express_info
+(
+  id int auto_increment
+    primary key,
+  name varchar(20) null,
+  express varchar(20) null,
+  message varchar(40) null,
+  remark varchar(20) null,
+  address varchar(20) null,
+  station tinyint null,
+  user_id int null,
+  phone varchar(20) null
+)
+;

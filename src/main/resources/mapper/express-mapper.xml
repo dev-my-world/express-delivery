@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="dao.ExpressDao">
     <insert id="addExpress" parameterType="model.ExpressInfo">
-        INSERT INTO express_info (user_id, real_name, express_name, station, address, pickup_code, remark, phone_tail)
-        VALUES (#{user_id}, #{real_name}, #{express_name}, #{station}, #{address}, #{pickup_code}, #{remark},
-                #{phone_tail})
+        INSERT INTO express_info (name, express, message, remark, address, station, phone)
+            VALUE (#{name}, #{express}, #{message}, #{remark}, #{address}, #{station}, #{phone})
     </insert>
     <select id="getExpress">
 
@@ -13,38 +12,14 @@
 
     <resultMap id="AllExpressList" type="model.ExpressInfo">
         <result property="id" column="id"/>
-        <result property="real_name" column="real_name"/>
-        <result property="express_name" column="express_name"/>
-        <result property="station" column="station"/>
-        <result property="pickup_code" column="pickup_code"/>
-        <result property="phone_tail" column="phone_tail"/>
+        <result property="name" column="name"/>
+        <result property="express" column="express"/>
+        <result property="message" column="message"/>
         <result property="remark" column="remark"/>
-    </resultMap>
-
-
-    <resultMap id="StationExpress" type="StationExpress">
-        <collection property="expressInfoList" ofType="ExpressInfo">
-            <result property="id" column="id"/>
-            <result property="real_name" column="realName"/>
-            <result property="express_name" column="expressName"/>
-            <result property="station" column="station"/>
-            <result property="pickup_code" column="pickupCode"/>
-            <result property="phone_tail" column="phoneTail"/>
-            <result property="remark" column="remark"/>
-        </collection>
-    </resultMap>
-
-
-    <resultMap id="ExpressByUser" type="model.User">
-        <collection property="expressInfoList" ofType="ExpressInfo">
-            <result property="id" column="id"/>
-            <result property="real_name" column="realName"/>
-            <result property="express_name" column="expressName"/>
-            <result property="station" column="station"/>
-            <result property="pickup_code" column="pickupCode"/>
-            <result property="phone_tail" column="phoneTail"/>
-            <result property="remark" column="remark"/>
-        </collection>
+        <result property="address" column="address"/>
+        <result property="station" column="station"/>
+        <result property="phone" column="phone"/>
+        <result property="user_id" column="user_id"/>
     </resultMap>
 
 
@@ -54,14 +29,14 @@
     </select>
 
 
-    <select id="getExpressByStation" parameterType="integer" resultMap="StationExpress">
+    <select id="getExpressByStation" parameterType="integer">
         SELECT *
         FROM express_info
         WHERE station = #{station}
     </select>
 
 
-    <select id="getExpressByUser" parameterType="model.User" resultMap="ExpressByUser">
+    <select id="getExpressByUser" parameterType="model.User">
         SELECT *
         FROM express_info
         WHERE user_id = #{userId}

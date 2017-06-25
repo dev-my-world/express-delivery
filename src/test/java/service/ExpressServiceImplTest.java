@@ -1,58 +1,33 @@
 package service;
 
 import model.ExpressInfo;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.List;
+import static org.junit.Assert.*;
 
 /**
- * Created by zhang on 2017/6/24.
+ * Created by zhang on 2017/6/25.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring/*.xml")
+@ContextConfiguration(value = "classpath:spring/*.xml")
 public class ExpressServiceImplTest {
     @Autowired
     private ExpressService expressService;
-
     @Test
     public void addExpress() throws Exception {
-    }
-
-    @Test
-    public void removeExpress() throws Exception {
-    }
-
-    @Test
-    public void allExpressList() throws Exception {
-        List<ExpressInfo> expressInfos = expressService.allExpressList();
-
-        JSONArray jsonArray = new JSONArray();
-        for (ExpressInfo expressInfo : expressInfos) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", expressInfo.getId());
-            jsonObject.put("realName", expressInfo.getReal_name());
-            jsonObject.put("expressName", expressInfo.getExpress_name());
-            jsonObject.put("address", expressInfo.getAddress());
-            jsonObject.put("remark", expressInfo.getRemark());
-            jsonObject.put("phoneTail", expressInfo.getPhone_tail());
-            jsonObject.put("pickupCode", expressInfo.getPickup_code());
-            jsonArray.put(jsonObject);
-        }
-        System.out.println(jsonArray.toString());
-    }
-
-    @Test
-    public void getExpressByStation() throws Exception {
-    }
-
-    @Test
-    public void getExpressByUser() throws Exception {
+        ExpressInfo expressInfo = new ExpressInfo();
+        expressInfo.setName("lsisjf");
+        expressInfo.setExpress("sfkdofs");
+        expressInfo.setMessage("sfff");
+        expressInfo.setRemark("fsfd");
+        expressInfo.setAddress("sff");
+        expressInfo.setStation(Long.valueOf("2"));
+        expressInfo.setPhone("sdd");
+        expressService.addExpress(expressInfo);
     }
 
 }
