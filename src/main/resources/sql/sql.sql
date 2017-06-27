@@ -5,17 +5,25 @@ CREATE TABLE user_info (
   `user_psw`   VARCHAR(20)        NOT NULL
 );
 
-create table express_info
+CREATE TABLE express_info
 (
-  id int auto_increment
-    primary key,
-  name varchar(20) null,
-  express varchar(20) null,
-  message varchar(40) null,
-  remark varchar(20) null,
-  address varchar(20) null,
-  station tinyint null,
-  user_id int null,
-  phone varchar(20) null
-)
-;
+  id      INT AUTO_INCREMENT
+    PRIMARY KEY,
+  name    VARCHAR(20) NULL,
+  express VARCHAR(20) NULL,
+  message VARCHAR(40) NULL,
+  remark  VARCHAR(20) NULL,
+  address VARCHAR(20) NULL,
+  station TINYINT     NULL,
+  user_id INT         NULL,
+  phone   VARCHAR(20) NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;;
+
+INSERT INTO express_info (name, express, message, remark, address, station, user_id, phone)
+
+VALUES ('张三','圆通快递','取件码1234567','你好，同学','this is an address',1,0,'123456') ,
+  ('张三','圆通快递','取件码1234567','你好，同学','this is an address',1,0,'123456')
+,('张三','圆通快递','取件码1234567','你好，同学','this is an address',2,0,'123456'),
+  ('张三','圆通快递','取件码1234567','你好，同学','this is an address',3,0,'123456') ,
+  ('张三','圆通快递','取件码1234567','你好，同学','this is an address',4,0,'123456') ,
+  ('张三','圆通快递','取件码1234567','你好，同学','this is an address',5,0,'123456')
