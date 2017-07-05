@@ -1,5 +1,6 @@
 package dao;
 
+
 import model.User;
 
 /**
@@ -9,5 +10,11 @@ public interface UserDao {
 
     User getUser(User user);
 
+
+    User getUserById(Integer userId);
+
     void addUser(User user);
+
+    void updateUser(User user);
+
 }

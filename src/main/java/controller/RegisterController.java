@@ -17,7 +17,7 @@ import java.io.IOException;
  * Created by zhang on 2017/6/21.
  */
 @Controller
-public class Register {
+public class RegisterController {
     @Autowired
     private UserService userService;
 

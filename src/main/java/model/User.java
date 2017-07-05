@@ -1,29 +1,24 @@
 package model;
 
-import java.util.List;
+
+import java.sql.Date;
 
 public class User {
-    private long userId;
-    private String userName;
-    private String userPhone;
-    private String userPsw;
 
-    private List<ExpressInfo> expressInfoList;
+  private long id;
+  private String userName;
+  private String userPhone;
+  private String userPsw;
+  private String userAddress;
+  private String userSchool;
 
-    public List<ExpressInfo> getExpressInfoList() {
-        return expressInfoList;
+
+    public long getId() {
+        return id;
     }
 
-    public void setExpressInfoList(List<ExpressInfo> expressInfoList) {
-        this.expressInfoList = expressInfoList;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -50,13 +45,31 @@ public class User {
         this.userPsw = userPsw;
     }
 
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public String getUserSchool() {
+        return userSchool;
+    }
+
+    public void setUserSchool(String userSchool) {
+        this.userSchool = userSchool;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", userPhone='" + userPhone + '\'' +
                 ", userPsw='" + userPsw + '\'' +
+                ", userAddress='" + userAddress + '\'' +
+                ", userSchool='" + userSchool + '\'' +
                 '}';
     }
 }

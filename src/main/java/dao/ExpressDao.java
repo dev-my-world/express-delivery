@@ -1,6 +1,8 @@
 package dao;
 
-import model.ExpressInfo;
+import model.Express;
+import model.StationExpressCount;
+import model.Transaction;
 import model.User;
 
 import java.util.List;
@@ -9,13 +11,29 @@ import java.util.List;
  * Created by zhang on 2017/6/22.
  */
 public interface ExpressDao {
-    void addExpress(ExpressInfo expressInfo);
+    void addExpress(Express express);
 
-    void getExpress(ExpressInfo expressInfo);
+    List<Express> allNotCollectExpressList();
 
-    List<ExpressInfo> allExpressList();
 
-    List<ExpressInfo> getExpressByStation(int station);
+    void addTransaction(Transaction transaction);
 
-    List<ExpressInfo> getExpressByUser(User user);
+
+    void updateExpress(Long id);
+
+
+    List<StationExpressCount> getExpressStationCount();
+
+
+    List<Express> getExpressByUser(Integer uid);
+
+
+    Express getExpressById(Integer id);
+
+
+    List<Express> getCollectExpress(Integer uid);
+
+
+
+    List<Express> getExpressByStation(Integer id);
 }

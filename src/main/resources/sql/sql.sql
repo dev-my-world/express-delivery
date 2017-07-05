@@ -19,7 +19,7 @@ CREATE TABLE express_info
   phone   VARCHAR(20) NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;;
 
-INSERT INTO express_info (name, express, message, remark, address, station, user_id, phone)
+INSERT INTO express (name, express, message, remark, address, station, user_id, phone)
 
 VALUES ('张三','圆通快递','取件码1234567','你好，同学','this is an address',1,0,'123456') ,
   ('张三','圆通快递','取件码1234567','你好，同学','this is an address',1,0,'123456')

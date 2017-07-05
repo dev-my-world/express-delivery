@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import service.UserService;
 
 import javax.servlet.ServletException;
@@ -18,30 +19,32 @@ import java.io.IOException;
  * Created by zhang on 2017/6/19.
  */
 @Controller
-public class Login {
+public class LoginController {
 
-    private @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/login")
-    public void login(@RequestParam("phoneNumber") String phoneNumber, @RequestParam("passWord")
-            String passWord, HttpServletRequest req, HttpServletResponse resp)
+    @ResponseBody
+    public User login(@RequestParam("phoneNumber") String phoneNumber, @RequestParam("passWord")
+            String passWord)
             throws ServletException, IOException {
         User user = new User();
         user.setUserPhone(phoneNumber);
         user.setUserPsw(passWord);
-        resp.setContentType("text/html;charset=utf-8");
         int userId = userService.validLogin(user);
         if (userId >= 0) {
-            req.getSession(true).setAttribute("userId", userId);
+            return user;
+        } else {
+            user.setId(-1L);
+            return user;
         }
 
-        try {
-            JSONObject jsonObject = new JSONObject().put("userId", userId);
-            resp.getWriter().println(jsonObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
     }
 
 }

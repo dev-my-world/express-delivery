@@ -9,4 +9,7 @@ public interface UserService {
     int validLogin(User user);
 
     boolean registerUser(User user);
+
+    User getUserInfo(Integer userId);
+
 }

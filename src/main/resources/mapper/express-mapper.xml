@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="dao.ExpressDao">
-    <insert id="addExpress" parameterType="model.ExpressInfo">
-        INSERT INTO express_info (name, express, message, remark, address, station, phone)
-            VALUE (#{name}, #{express}, #{message}, #{remark}, #{address}, #{station}, #{phone})
+    <insert id="addExpress" parameterType="model.Express">
+        INSERT INTO express (name, express, message, remark, address, station, user_id, phone, weight, description)
+        VALUES (#{name}, #{express}, #{message}, #{remark}, #{address}, #{station}, #{user_Id}, #{phone},
+                #{weight}, #{description})
     </insert>
-    <select id="getExpress">
-
-    </select>
 
 
-    <resultMap id="AllExpressList" type="model.ExpressInfo">
+    <insert id="addTransaction" parameterType="model.Transaction">
+        INSERT transaction (uid, eid) VALUES (#{uid}, #{eid})
+    </insert>
+
+
+    <resultMap id="ExpressList" type="model.Express">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="express" column="express"/>
@@ -19,27 +22,66 @@
         <result property="address" column="address"/>
         <result property="station" column="station"/>
         <result property="phone" column="phone"/>
-        <result property="user_id" column="user_id"/>
+        <result property="is_Collect" column="is_collect"/>
+        <result property="weight" column="weight"/>
+        <result property="description" column="description"/>
+        <result property="user_Id" column="user_id"/>
+        <result property="InsertTime" column="insert_time"/>
     </resultMap>
 
 
-    <select id="allExpressList" resultMap="AllExpressList">
+    <update id="updateExpress" parameterType="long">
+        UPDATE express
+        SET is_collect = 1
+        WHERE id = #{id}
+    </update>
+
+    <select id="allNotCollectExpressList" resultMap="ExpressList">
         SELECT *
-        FROM express_info
+        FROM express
+        WHERE is_collect = 0
     </select>
 
 
-    <select id="getExpressByStation" parameterType="integer">
+    <select id="getExpressByStation" parameterType="integer" resultMap="ExpressList">
         SELECT *
-        FROM express_info
-        WHERE station = #{station}
+        FROM express
+        WHERE station = #{id} AND is_collect = 0
     </select>
 
 
-    <select id="getExpressByUser" parameterType="model.User">
+    <select id="getExpressByUser" parameterType="integer" resultMap="ExpressList">
         SELECT *
-        FROM express_info
-        WHERE user_id = #{userId}
+        FROM express
+        WHERE user_id = #{uid} AND is_collect = 0
+        ORDER BY id DESC
+    </select>
+
+    <resultMap id="expressStationCount" type="StationExpressCount">
+        <result property="count" column="count"/>
+        <result property="station" column="station"/>
+    </resultMap>
+
+    <select id="getExpressStationCount" resultMap="expressStationCount">
+        SELECT
+            station,
+            count(*) AS count
+        FROM express
+        WHERE is_collect = 0
+        GROUP BY station
+    </select>
+    <select id="getExpressById" parameterType="integer" resultMap="ExpressList">
+        SELECT *
+        FROM express
+        WHERE id = #{id};
+    </select>
+    <select id="getCollectExpress" resultMap="ExpressList">
+        SELECT *
+        FROM express AS e
+            INNER JOIN transaction AS t
+                ON e.id = t.eid
+        WHERE t.uid = #{uid}
+        order by e.id desc
     </select>
 
 
